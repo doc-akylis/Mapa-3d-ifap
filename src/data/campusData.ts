@@ -1,0 +1,418 @@
+import { CampusLocation, NavigationStep, VisualLandmark, CampusNotice, AccessibleFacility, GpsCoordinate } from '../types';
+
+export const IFAP_CAMPUS_CENTER: GpsCoordinate = {
+  lat: 0.08620,
+  lng: -51.09225,
+};
+
+export interface CampusBuildingGeo {
+  id: string;
+  name: string;
+  code: string;
+  description: string;
+  category: string;
+  center: GpsCoordinate;
+  polygon: [number, number][]; // [lat, lng]
+  color: string;
+  fillColor: string;
+}
+
+export const CAMPUS_BUILDINGS_GEO: CampusBuildingGeo[] = [
+  {
+    id: 'guarita',
+    name: 'Guarita & Portaria Principal',
+    code: 'PORTARIA',
+    description: 'Acesso principal para pedestres e veículos via Rodovia BR-210 com guarita de segurança 24h e cancela.',
+    category: 'Acesso',
+    center: { lat: 0.08740, lng: -51.09295 },
+    polygon: [
+      [0.08730, -51.09308],
+      [0.08752, -51.09308],
+      [0.08752, -51.09282],
+      [0.08730, -51.09282],
+    ],
+    color: '#006c2d',
+    fillColor: '#8df89c',
+  },
+  {
+    id: 'usina-solar',
+    name: 'Usina Solar Fotovoltaica',
+    code: 'USINA SOLAR',
+    description: 'Parque fotovoltaico do IFAP com painéis solares sustentáveis responsáveis pelo abastecimento do campus.',
+    category: 'Sustentabilidade & Energia',
+    center: { lat: 0.08725, lng: -51.09195 },
+    polygon: [
+      [0.08708, -51.09255],
+      [0.08745, -51.09255],
+      [0.08745, -51.09135],
+      [0.08708, -51.09135],
+    ],
+    color: '#0284c7',
+    fillColor: '#38bdf8',
+  },
+  {
+    id: 'bloco-a',
+    name: 'Bloco A e B (Instituto Federal do Amapá)',
+    code: 'BLOCO A / B',
+    description: 'Edifício principal com pátio interno arborizado. Abriga a Biblioteca Central Mário Ypiranga, Secretaria (CRA), Gabinete, Salas 01 a 16 e Auditório.',
+    category: 'Administração & Ensino',
+    center: { lat: 0.08630, lng: -51.09240 },
+    polygon: [
+      [0.08585, -51.09262],
+      [0.08678, -51.09262],
+      [0.08678, -51.09218],
+      [0.08585, -51.09218],
+    ],
+    color: '#1976D2',
+    fillColor: '#90CAF9',
+  },
+  {
+    id: 'bloco-c',
+    name: 'Bloco C (IFAP - CAMPUS MACAPÁ)',
+    code: 'BLOCO C - LABS',
+    description: 'Edifício linear com cobertura solar. Laboratórios de Informática 01 a 06, Lab de Redes de Computadores, Robótica, Mineração e Telecomunicações.',
+    category: 'Laboratórios & Tecnologia',
+    center: { lat: 0.08630, lng: -51.09195 },
+    polygon: [
+      [0.08585, -51.09205],
+      [0.08675, -51.09205],
+      [0.08675, -51.09185],
+      [0.08585, -51.09185],
+    ],
+    color: '#825500',
+    fillColor: '#FDE68A',
+  },
+  {
+    id: 'bloco-d',
+    name: 'Bloco D & Pavilhões Didáticos (Cantina)',
+    code: 'BLOCO D / CANTINA',
+    description: 'Pavilhões modulares verdes com pátios internos: Cantina do IFAP, Área de Convivência, Grêmio Estudantil e Labs de Ciências da Natureza.',
+    category: 'Alimentação & Convivência',
+    center: { lat: 0.08635, lng: -51.09145 },
+    polygon: [
+      [0.08605, -51.09168],
+      [0.08675, -51.09168],
+      [0.08675, -51.09120],
+      [0.08605, -51.09120],
+    ],
+    color: '#D97706',
+    fillColor: '#FCD34D',
+  },
+  {
+    id: 'ginasio',
+    name: 'Ginásio Poliesportivo (Ginasio - Campus Macapá)',
+    code: 'GINÁSIO',
+    description: 'Grande complexo poliesportivo coberto com arquibancadas, quadra oficial de futsal/basquete, vestiários e palco para formaturas.',
+    category: 'Esportes & Eventos',
+    center: { lat: 0.08515, lng: -51.09238 },
+    polygon: [
+      [0.08475, -51.09265],
+      [0.08555, -51.09265],
+      [0.08555, -51.09210],
+      [0.08475, -51.09210],
+    ],
+    color: '#4B5563',
+    fillColor: '#E5E7EB',
+  },
+  {
+    id: 'galpao-oeste',
+    name: 'Galpão de Apoio & Manutenção',
+    code: 'MANUTENÇÃO',
+    description: 'Setor de infraestrutura, almoxarifado técnico e garagem de veículos oficiais.',
+    category: 'Infraestrutura',
+    center: { lat: 0.08495, lng: -51.09308 },
+    polygon: [
+      [0.08465, -51.09318],
+      [0.08525, -51.09318],
+      [0.08525, -51.09298],
+      [0.08465, -51.09298],
+    ],
+    color: '#64748B',
+    fillColor: '#CBD5E1',
+  },
+  {
+    id: 'subestacao',
+    name: 'Subestação Elétrica & Quadras Auxiliares',
+    code: 'SUBESTAÇÃO',
+    description: 'Central de distribuição de energia do campus e quadras esportivas descobertas.',
+    category: 'Infraestrutura',
+    center: { lat: 0.08525, lng: -51.09175 },
+    polygon: [
+      [0.08505, -51.09195],
+      [0.08545, -51.09195],
+      [0.08545, -51.09155],
+      [0.08505, -51.09155],
+    ],
+    color: '#7C3AED',
+    fillColor: '#DDD6FE',
+  },
+  {
+    id: 'estacionamento',
+    name: 'Alameda Oeste & Estacionamento Principal',
+    code: 'ESTACIONAMENTO',
+    description: 'Via pavimentada com passarela coberta (marquise verde), vagas PCD e bicicletário.',
+    category: 'Estacionamento',
+    center: { lat: 0.08660, lng: -51.09290 },
+    polygon: [
+      [0.08585, -51.09305],
+      [0.08735, -51.09305],
+      [0.08735, -51.09275],
+      [0.08585, -51.09275],
+    ],
+    color: '#10B981',
+    fillColor: '#D1FAE5',
+  },
+];
+
+// Dense waypoint path for ultra-smooth real-time navigation from Guarita to Lab 03 along actual walkways visible in the satellite photo
+export const ROUTE_WAYPOINTS_DETAILED: { lat: number; lng: number; instruction: string; speedKmh: number }[] = [
+  { lat: 0.08740, lng: -51.09295, instruction: 'Saindo da Guarita Principal. Siga ao sul pela passarela pavimentada com marquise.', speedKmh: 4.2 },
+  { lat: 0.08725, lng: -51.09290, instruction: 'Passando ao lado da Usina Solar Fotovoltaica à sua esquerda.', speedKmh: 4.4 },
+  { lat: 0.08705, lng: -51.09285, instruction: 'Mantenha-se na calçada acessível com piso podotátil.', speedKmh: 4.5 },
+  { lat: 0.08680, lng: -51.09280, instruction: 'Avistando o Bloco Principal (Instituto Federal do Amapá).', speedKmh: 4.3 },
+  { lat: 0.08655, lng: -51.09275, instruction: 'Em frente ao Bloco A (Biblioteca Mário Ypiranga e CRA). Em 20m, vire à esquerda.', speedKmh: 4.1 },
+  { lat: 0.08645, lng: -51.09265, instruction: 'Vire à esquerda na passarela de interligação coberta.', speedKmh: 3.8 },
+  { lat: 0.08640, lng: -51.09245, instruction: 'Passando pelo Pátio Interno arborizado com jardim central.', speedKmh: 4.0 },
+  { lat: 0.08640, lng: -51.09220, instruction: 'Siga pela passarela suspensa em direção ao Bloco C (IFAP).', speedKmh: 4.1 },
+  { lat: 0.08640, lng: -51.09195, instruction: 'Entrando no hall do Bloco C de Laboratórios. Acesse a rampa ou escada.', speedKmh: 3.5 },
+  { lat: 0.08650, lng: -51.09195, instruction: 'Subindo para o 1º Andar dos Laboratórios de Informática.', speedKmh: 3.0 },
+  { lat: 0.08660, lng: -51.09195, instruction: 'Você chegou ao seu destino: Lab. de Informática 03 (Bloco C)!', speedKmh: 0 },
+];
+
+export const ASSETS = {
+  LOGO_LIGHT: 'https://lh3.googleusercontent.com/aida/AEtjO1XfBN-4R6xiMqG9D8UJq8Q7tyw8DA-ThLQr4Awi4Vdez1lRFOc_5Dd8T_nrMfxNQ1p0h8YJXFLczwg9-1bzGqlYTedhy7IEIoQr5PdXUSG7zzW6BoZ0v9zR8wuhzgBulN_Z3C4a3v6oz8VX2Aw-a_4sXdtk4br7pum5OXkD4BJVZ41E0td-5NnHKTwMBy-d-JdsseWV37SC0lOPV6dOYQAImElfI20vrTUPFTaNmfGoQCWSxvNjBrZIx1Zo',
+  STUDENT_PROFILE: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBguVT3o6DWN5vlFLvvnLEFW0M7i-nsNE2UsKwDhUj6ON3SRyDqdHksDxthMIQJZOdOiGaA6P_1uo2Fx1A2h_vEtrqnExaAom4zaX08iIzDRuK4_aICmWs6FLygtGppmgK144yj7-TPtjXTjqivPfflIP2BAFXpspYrsjKsJnb2dN9uTeR0DbWqPET9BY801N4g9wZT0z1gmZUYoIzeGx1X4QkqDGWAlw-56UtFIQdYCDKYTpMnCRfYTw',
+  LANDMARK_TOTEM: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAKlysmL1rPspvf6FWpa_8Acxrf-NQR0JIiyd_iQi1bdNP3eQN8MOrf6C2ao2p8Fbk-jZQ5yDKtvuA_5nyNMzbF-0VaMIKAd_-69_jE3xaeDyygbV47RvL-_frl2eZ_haTzQGv69Qfy6ZcVVmH_Nxhw7dZUAxQWowQn8-q6hd1EpUqnJIBhYmF86kcRNUn-v4aVtddWZxiV_RoLHC956QW_0XOKTY-050e-WnPQSIrCyK52OB_LpMTLVQ',
+  LANDMARK_WATER: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGCQKnJGUFVrSmuEdX7UVB1uSIr4UNbrVlLFzqVtHj-_ai2pAy8HCDTTy4c3-ivRdV0x_7y90HNTuX8_pw5i4DTg82_r2DB9gTg2PnQ3I94USeaeKeGQfoUAt2_Ut-0lR0boWllwndXhIz_R6X0NEN4Cj8uD5YdcjUIJ_-giOTRbusyA8VM1pCK1FaL3aSrNsAfwCKjGaPvHyEOaOPu0RuVUOkuy6r3wOC7WlziZkpbN4xK9ts-V5Wsg',
+};
+
+export const POPULAR_LOCATIONS: CampusLocation[] = [
+  {
+    id: 'lab-redes',
+    name: 'Lab. Redes & Sistemas',
+    category: 'labs',
+    block: 'Bloco C',
+    floor: 'Piso 1',
+    distance: '140m a pé',
+    statusText: 'Aberto p/ monitoria',
+    icon: 'terminal',
+  },
+  {
+    id: 'sec-academica',
+    name: 'Secretaria Acadêmica · CRA',
+    category: 'admin',
+    block: 'Bloco A',
+    floor: 'Térreo',
+    distance: '80m',
+    statusText: 'Fila estimada: 4 min',
+    icon: 'assignment_turned_in',
+  },
+  {
+    id: 'cantina',
+    name: 'Cantina & Ponto de Encontro',
+    category: 'cantina',
+    block: 'Bloco D',
+    floor: 'Térreo',
+    distance: '95m',
+    statusText: 'Lanches & Bebidas',
+    icon: 'coffee',
+  },
+  {
+    id: 'biblioteca-central',
+    name: 'Biblioteca Central Mário Ypiranga',
+    category: 'biblioteca',
+    block: 'Bloco A',
+    floor: 'Térreo',
+    distance: '75m',
+    statusText: 'Salas de estudo livres',
+    icon: 'local_library',
+  },
+  {
+    id: 'sala-b12',
+    name: 'Sala B-12 (Turma ADS 2024)',
+    category: 'salas',
+    block: 'Bloco B',
+    floor: '1º Andar',
+    distance: '120m',
+    statusText: 'Aula às 19:00',
+    icon: 'school',
+  },
+  {
+    id: 'banheiro-pcd',
+    name: 'Sanitário Acessível PWD (B-02)',
+    category: 'acessivel',
+    block: 'Bloco B',
+    floor: 'Térreo',
+    distance: '65m',
+    statusText: 'Desobstruído',
+    icon: 'accessible',
+  },
+];
+
+export const NAVIGATION_STEPS: NavigationStep[] = [
+  {
+    number: 1,
+    title: 'Passarela Central Coberta',
+    distance: '60 m',
+    instruction: 'Siga em linha reta pela passarela pavimentada saindo da guarita, mantendo os armários à sua direita rumo ao pátio do Bloco B.',
+    badgeText: 'Seguir em frente',
+  },
+  {
+    number: 2,
+    title: 'Jardim Central & Acesso Bloco C',
+    distance: '45 m',
+    instruction: 'Ao avistar o canteiro arborizado com bancos de concreto, vire à esquerda em direção à entrada envidraçada do Bloco C.',
+    subBadges: [
+      { label: 'Virar à esquerda', icon: 'turn_left', colorClass: 'bg-secondary-fixed text-on-secondary-fixed-variant' },
+      { label: 'Rampa com corrimão e piso tátil', icon: 'accessible', colorClass: 'bg-tertiary-fixed text-on-tertiary-fixed-variant' },
+    ],
+  },
+  {
+    number: 3,
+    title: 'Acesso ao 1º Andar',
+    distance: '20 m',
+    instruction: 'Suba pela rampa suave leste ou utilize o elevador social localizado à direita do saguão de entrada.',
+    subBadges: [
+      { label: 'Rampa Leste', icon: 'stairs', colorClass: 'bg-surface-container-high text-on-surface' },
+      { label: 'Elevador liberado', icon: 'elevator', colorClass: 'bg-surface-container-high text-on-surface' },
+    ],
+  },
+  {
+    number: 4,
+    title: 'Chegada ao Laboratório 03',
+    distance: 'Destino',
+    instruction: 'Ao sair da rampa/elevador no 1º pavimento, caminhe 10 metros pelo corredor sul. O Laboratório 03 fica à sua direita, imediatamente após a Sala dos Professores.',
+  },
+];
+
+export const VISUAL_LANDMARKS: VisualLandmark[] = [
+  {
+    id: 'totem-ifap',
+    numberTag: 'Marco 1',
+    title: 'Totem Verde IFAP',
+    location: 'No cruzamento central que divide Bloco B e C.',
+    imageUrl: ASSETS.LANDMARK_TOTEM,
+    tagBg: 'bg-primary/90 text-on-primary',
+  },
+  {
+    id: 'bebedouros-wc',
+    numberTag: 'Marco 2',
+    title: 'Bebedouros & WCs',
+    location: 'Em frente à subida da rampa acessível leste.',
+    imageUrl: ASSETS.LANDMARK_WATER,
+    tagBg: 'bg-tertiary-container/90 text-on-tertiary-container',
+  },
+];
+
+export const NOTICES_DATA: CampusNotice[] = [
+  {
+    id: 'vestibular-2026',
+    title: 'Prova do Vestibular IFAP • Processo Seletivo',
+    subtitle: 'Mudança extraordinária de local para acomodação de candidatos com mobilidade facilitada.',
+    category: 'prova',
+    isUrgent: true,
+    timeTag: 'Hoje • 14:00',
+    courseTag: 'Candidatos com inscrição A — M',
+    fromLocation: 'Bloco B • Sala 04',
+    toLocation: 'Auditório Central (Bloco A)',
+    actionText: 'Ver nova sala no Mapa',
+    actionTarget: 'Auditório Central (Bloco A)',
+  },
+  {
+    id: 'ads-progweb',
+    title: 'Prof. Marcelo Santos',
+    subtitle: 'Disciplina: Programação Web II',
+    category: 'mudanca',
+    timeTag: '19:00 — 22:30',
+    courseTag: 'Informática para Internet • 2º Ano',
+    fromLocation: 'Lab Info 02',
+    toLocation: 'Lab Redes 01 (Bloco C)',
+    reason: 'Manutenção preventiva nos computadores',
+    actionText: 'Como chegar',
+    actionTarget: 'Lab Redes 01 (Bloco C)',
+  },
+  {
+    id: 'coord-quimica',
+    title: 'Coordenação de Curso',
+    subtitle: 'Atendimento Geral • Plantão Acadêmico',
+    category: 'mudanca',
+    timeTag: 'Tarde • 15:30',
+    courseTag: 'Licenciatura em Química',
+    fromLocation: 'Sala B-10',
+    toLocation: 'Gabinete Docente 03',
+    reason: 'Plantão de dúvidas acadêmicas',
+    actionText: 'Localizar',
+    actionTarget: 'Gabinete Docente 03',
+  },
+  {
+    id: 'manut-elevador',
+    title: 'Elevador Bloco C em Manutenção Programada',
+    subtitle: 'Acesso aos andares 1 e 2 temporariamente redirecionado. Rota alternativa suave habilitada pela rampa de integração sul.',
+    category: 'manutencao',
+    timeTag: 'Previsão: 2 dias',
+    reason: 'Desvio Recomendado: Seguir pela marquise coberta até a Rampa Sul (35m).',
+    actionText: 'Traçar rota acessível no campus',
+    actionTarget: 'Rampa Sul - Bloco C',
+  },
+];
+
+export const ACCESSIBLE_FACILITIES: AccessibleFacility[] = [
+  {
+    id: 'sanitario-b02',
+    title: 'Sanitário Acessível Unissex',
+    category: 'sanitarios',
+    block: 'Bloco B • Térreo',
+    room: 'Sala B-02',
+    description: 'Equipado com barras de apoio em aço inox, pia rebaixada, espelho inclinado e acionador sonoro de emergência conectado à portaria.',
+    statusBadge: 'Aberto',
+    statusIcon: 'lock_open',
+    capacityOrStandard: 'Botão SOS Testado',
+    actionLabel: 'Guiar até lá',
+  },
+  {
+    id: 'elevador-blococ',
+    title: 'Elevador Social & Acessível',
+    category: 'elevadores',
+    block: 'Bloco C • Pavimento Principal',
+    room: 'Acesso aos Pisos 1 e 2',
+    description: 'Cabine ampla para cadeirantes com giro 360°, botoeiras em Braille na altura regulamentar, aviso sonoro de andar e porta com sensor infravermelho.',
+    statusBadge: 'Operando',
+    statusIcon: 'check',
+    capacityOrStandard: 'Capacidade: 8 pessoas',
+    actionLabel: 'Guiar até lá',
+  },
+  {
+    id: 'rampa-biblioteca',
+    title: 'Rampa Norte - Biblioteca Central',
+    category: 'elevadores',
+    block: 'Setor Norte',
+    room: 'Rampa Coberta',
+    description: 'Inclinação suave de 5% com patamares de descanso a cada 6 metros, corrimãos duplos nos dois lados e piso antiderrapante mesmo em dias chuvosos.',
+    statusBadge: 'Padrão NBR 9050',
+    statusIcon: 'verified_user',
+    capacityOrStandard: 'Largura: 1.80m',
+    actionLabel: 'Guiar até lá',
+  },
+  {
+    id: 'napne-sala',
+    title: 'NAPNE (Apoio a Necessidades Específicas)',
+    category: 'napne',
+    block: 'Bloco A • Sala A-08',
+    room: 'Atendimento Ativo',
+    description: 'Equipe multidisciplinar com intérpretes e tradutores de Libras, apoio pedagógico especializado, empréstimo de lupas eletrônicas e materiais didáticos ampliados.',
+    statusBadge: '3 Intérpretes hoje',
+    statusIcon: 'translate',
+    capacityOrStandard: 'Atendimento presencial ativo',
+    actionLabel: 'Ir à Sala',
+  },
+  {
+    id: 'trilha-podotatil',
+    title: 'Trilha Podotátil Direcional e Alerta',
+    category: 'piso',
+    block: 'Eixo Central • Portaria à Reitoria',
+    description: 'Piso tátil contínuo de alta aderência com placas indicativas em Braille e fonte ampliada em todas as esquinas e portas de laboratórios.',
+    statusBadge: 'Piso amarelo de alto contraste luminoso',
+    capacityOrStandard: '100% NBR 9050',
+    actionLabel: 'Seguir Trilha',
+  },
+];

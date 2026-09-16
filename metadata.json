@@ -1,0 +1,6 @@
+{
+  "name": "Mapa IFAP Campus Macapá",
+  "description": "Aplicativo oficial de mapas, rotas acessíveis, localização de salas e avisos em tempo real do IFAP Campus Macapá.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
